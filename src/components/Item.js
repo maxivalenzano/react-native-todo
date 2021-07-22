@@ -5,7 +5,7 @@ import DateTimePicker from "react-native-modal-datetime-picker";
 import Store from "../context/store";
 import styled from "styled-components";
 import moment from "moment";
-import { Picker } from "@react-native-picker/picker";
+import ModalSelector from "react-native-modal-selector";
 
 const Item = ({ navigation }) => {
   const { dispatch } = useContext(Store);
@@ -17,7 +17,16 @@ const Item = ({ navigation }) => {
     control,
     reset,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      task: "",
+      deadline: "",
+      start: "",
+      end: "",
+      remind: "",
+      repeat: "",
+    },
+  });
   const onSubmitData = (data) => {
     const object = { ...data, status: false };
     console.log(object);
@@ -33,7 +42,7 @@ const Item = ({ navigation }) => {
       start: "",
       end: "",
       remind: "",
-      repeat: "",
+      repeat: "Daily",
     });
   };
 
@@ -48,6 +57,19 @@ const Item = ({ navigation }) => {
   const [visibleEnd, setVisibleEnd] = useState(false);
 
   console.log("errors", errors);
+
+  const valuesRemind = [
+    { key: 1, label: "5 minutes" },
+    { key: 2, label: "10 minutes" },
+    { key: 3, label: "15 minutes" },
+    { key: 4, label: "30 minutes" },
+    { key: 5, label: "60 minutes" },
+  ];
+  const valuesRepeat = [
+    { key: 1, label: "Daily" },
+    { key: 2, label: "Weekly" },
+    { key: 3, label: "Monthly" },
+  ];
 
   return (
     <ComponentContainer>
@@ -93,7 +115,6 @@ const Item = ({ navigation }) => {
               minimumDate={initDate}
               onConfirm={(date) => {
                 setVisibleDate(false);
-                console.log(date);
                 setPickerDate(date);
                 onChange(date);
               }}
@@ -102,7 +123,6 @@ const Item = ({ navigation }) => {
         )}
         name="deadline"
         rules={{ required: true }}
-        defaultValue=""
       />
       {errors.deadline && <ErrorText>This is required.</ErrorText>}
 
@@ -131,7 +151,12 @@ const Item = ({ navigation }) => {
                   date={pickerStart}
                   mode="time"
                   onCancel={() => setVisibleStart(false)}
-                  // minimumDate={initStart}
+                  minimumDate={
+                    pickerDate.setHours(0, 0, 0, 0) <=
+                    initDate.setHours(0, 0, 0, 0)
+                      ? new Date()
+                      : null
+                  }
                   onConfirm={(date) => {
                     setVisibleStart(false);
                     setPickerStart(date);
@@ -142,7 +167,6 @@ const Item = ({ navigation }) => {
             )}
             name="start"
             rules={{ required: true }}
-            defaultValue=""
           />
           {errors.start && <ErrorText>This is required.</ErrorText>}
         </GridItem>
@@ -181,7 +205,6 @@ const Item = ({ navigation }) => {
             )}
             name="end"
             rules={{ required: true }}
-            defaultValue=""
           />
           {errors.end && <ErrorText>This is required.</ErrorText>}
         </GridItem>
@@ -191,55 +214,44 @@ const Item = ({ navigation }) => {
         control={control}
         render={({ field: { onChange, onBlur, value } }) => (
           <ComponentPressable>
-            <Picker
-              style={{
-                backgroundColor: "#FFFFFF",
-                fontSize: 16,
-                paddingHorizontal: 10,
-                paddingVertical: 8,
-                borderWidth: 0.5,
-                borderRadius: 20,
-                color: "black",
-                paddingRight: 30, // to ensure the text is never behind the icon
+            <ModalSelector
+              data={valuesRemind}
+              initValue="Choose one"
+              onChange={(option) => {
+                onChange(option.label);
               }}
-              selectedValue={value}
-              onValueChange={(itemValue) => onChange(itemValue)}
             >
-              <Picker.Item label="Choose one" value="0" />
-              <Picker.Item label="10 minutes" value="10" />
-              <Picker.Item label="15 minutes" value="15" />
-              <Picker.Item label="30 minutes" value="30" />
-            </Picker>
+              <TextInput
+                editable={false}
+                placeholder="Choose one"
+                value={value}
+              />
+            </ModalSelector>
           </ComponentPressable>
         )}
         name="remind"
         rules={{ required: true }}
       />
+
       {errors.remind && <ErrorText>This is required.</ErrorText>}
       <TextLabel>Repeat</TextLabel>
       <Controller
         control={control}
         render={({ field: { onChange, onBlur, value } }) => (
           <ComponentPressable>
-            <Picker
-              style={{
-                backgroundColor: "#FFFFFF",
-                fontSize: 16,
-                paddingHorizontal: 10,
-                paddingVertical: 8,
-                borderWidth: 0.5,
-                borderRadius: 20,
-                color: "black",
-                paddingRight: 30, // to ensure the text is never behind the icon
+            <ModalSelector
+              data={valuesRepeat}
+              initValue="Choose one"
+              onChange={(option) => {
+                onChange(option.label);
               }}
-              selectedValue={value}
-              onValueChange={(itemValue) => onChange(itemValue)}
             >
-              <Picker.Item label="Choose one" value="0" />
-              <Picker.Item label="daily" value="daily" />
-              <Picker.Item label="weekly" value="weekly" />
-              <Picker.Item label="monthly" value="monthly" />
-            </Picker>
+              <TextInput
+                editable={false}
+                placeholder="Choose one"
+                value={value}
+              />
+            </ModalSelector>
           </ComponentPressable>
         )}
         name="repeat"
