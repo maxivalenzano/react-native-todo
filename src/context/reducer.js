@@ -8,10 +8,9 @@ export default function reducer(state, action) {
       if (!action.payload) {
         return state;
       }
-      const newId = !!state.todos ? state.todos.length + 1 : 1;
-      const newTodo = { ...action.payload, id: newId };
+      const newTodo = { ...action.payload, id: state.id++ };
       return {
-        ...state,
+        ...state, ...state.id++,
         todos: [...state.todos, newTodo],
       };
     case "CHECK":

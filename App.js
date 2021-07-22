@@ -8,13 +8,13 @@ import reducer from "./src/context/reducer";
 import Store from "./src/context/store";
 
 const initData = async () => {
-  const list = await AsyncStorage.getItem("state2");
-  return !!list ? JSON.parse(list) : { todos: [] };
+  const list = await AsyncStorage.getItem("state5");
+  return !!list ? JSON.parse(list) : { todos: [], id: 1 };
 };
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [state, dispatch] = useReducer(reducer, { todos: [] });
+  const [state, dispatch] = useReducer(reducer, { todos: [], id: 1 });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,14 +30,14 @@ const App = () => {
   useEffect(() => {
     if (state.todos.length > 0) {
       //para que no guarde antes de que inicie
-      AsyncStorage.setItem("state2", JSON.stringify(state));
+      AsyncStorage.setItem("state5", JSON.stringify(state));
     }
   }, [state]);
 
   if (isLoading) {
     return (
       <SafeAreaView style={{ flex: 1 }}>
-        <Store.Provider value={{ state: { todos: [] }, dispatch }}>
+        <Store.Provider value={{ state: { todos: [], id: 1 }, dispatch }}>
           <Navigation />
           <StatusBar />
         </Store.Provider>
