@@ -5,6 +5,7 @@ import Alltask from "../screens/All";
 import Complete from "../screens/Complete";
 import Uncomplete from "../screens/Uncomplete";
 import AddTask from "../components/AddItem";
+import Item from "../components/Item";
 
 const TabNavigator = createMaterialTopTabNavigator(
   {
@@ -52,6 +53,14 @@ const WelcomeScreen = createStackNavigator(
       screen: AddTask,
       navigationOptions: () => ({
         title: `Add task`,
+        headerTitleStyle: { alignSelf: "flex-start" },
+      }),
+    },
+
+    Task: {
+      screen: Item,
+      navigationOptions: () => ({
+        title: `Task`,
         headerTitleStyle: { alignSelf: "flex-start" },
       }),
     },

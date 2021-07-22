@@ -13,6 +13,8 @@
     "@react-native-community/datetimepicker": "^3.5.2",
     "@react-native-community/masked-view": "0.1.10",
     "@react-native-picker/picker": "1.16.1",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.6",
     "expo": "~42.0.1",
     "expo-status-bar": "~1.0.4",
     "moment": "^2.29.1",
