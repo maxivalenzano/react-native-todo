@@ -1,21 +1,58 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState, useContext, useReducer, useEffect } from "react";
+import { StatusBar } from "expo-status-bar";
+import { SafeAreaView } from "react-native-safe-area-context";
+import Navigation from "./src/navigation/ScreenNavigation";
+import Header from "./src/components/Header";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import reducer from "./src/context/reducer";
+import Store from "./src/context/store";
 
-export default function App() {
+const initData = async () => {
+  const list = await AsyncStorage.getItem("state2");
+  return !!list ? JSON.parse(list) : { todos: [] };
+};
+
+const App = () => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [state, dispatch] = useReducer(reducer, { todos: [] });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      //obtenemos del AsyncStorage y lo pasamos al reducer
+      const result = await initData();
+      setIsLoading(false);
+      console.log("initData:", result);
+      dispatch({ type: "INIT_REDUCER", payload: result });
+    };
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    if (state.todos.length > 0) {
+      //para que no guarde antes de que inicie
+      AsyncStorage.setItem("state2", JSON.stringify(state));
+    }
+  }, [state]);
+
+  if (isLoading) {
+    return (
+      <SafeAreaView style={{ flex: 1 }}>
+        <Store.Provider value={{ state: { todos: [] }, dispatch }}>
+          <Navigation />
+          <StatusBar />
+        </Store.Provider>
+      </SafeAreaView>
+    );
+  }
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <SafeAreaView style={{ flex: 1 }}>
+      <Store.Provider value={{ state, dispatch }}>
+        <Navigation />
+        <StatusBar />
+      </Store.Provider>
+    </SafeAreaView>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
