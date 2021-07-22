@@ -12,7 +12,7 @@ const AllTask = ({ navigation }) => {
   console.log("Store: ", state);
 
   const handleIngresarButton = () => {
-    navigation.navigate("AddInput");
+    navigation.navigate("AddTask");
   };
 
   const checkItem = (item, state) => {
@@ -32,9 +32,9 @@ const AllTask = ({ navigation }) => {
           )}
         />
         <ButtonContainer>
-          <SubmitButton2 onPress={() => handleIngresarButton()}>
+          <SubmitButton onPress={() => handleIngresarButton()}>
             <TextButton>Add a Task</TextButton>
-          </SubmitButton2>
+          </SubmitButton>
         </ButtonContainer>
       </ComponentContainer>
     </>
@@ -54,25 +54,18 @@ const Container = styled.View`
   justify-content: flex-end;
   padding: 10px;
 `;
-const SubmitButton = styled.TouchableOpacity`
-  width: 150px;
-  height: 30px;
+
+const SubmitButton = styled.Pressable`
   justify-content: center;
   align-items: center;
-  background-color: grey;
-  margin-bottom: 20px;
   border-radius: 20px;
 `;
-const SubmitButton2 = styled.Pressable`
-  justify-content: center;
-  align-items: center;
-  border-radius: 50px;
-`;
 const ButtonContainer = styled.View`
+  width: 100%;
   color: white;
   height: 40px;
   background-color: #00bb2d;
-  border-radius: 4px;
+  border-radius: 20px;
 `;
 const TextButton = styled.Text`
   color: white;
@@ -89,4 +82,6 @@ const ComponentContainer = styled.View`
   justify-content: center;
   padding-top: 5px;
   padding-bottom: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
 `;

@@ -198,7 +198,7 @@ const AddItem = ({ navigation }) => {
                 paddingHorizontal: 10,
                 paddingVertical: 8,
                 borderWidth: 0.5,
-                borderRadius: 8,
+                borderRadius: 20,
                 color: "black",
                 paddingRight: 30, // to ensure the text is never behind the icon
               }}
@@ -228,7 +228,7 @@ const AddItem = ({ navigation }) => {
                 paddingHorizontal: 10,
                 paddingVertical: 8,
                 borderWidth: 0.5,
-                borderRadius: 8,
+                borderRadius: 20,
                 color: "black",
                 paddingRight: 30, // to ensure the text is never behind the icon
               }}
@@ -273,7 +273,7 @@ const ComponentPressable = styled.Pressable`
   background-color: whitesmoke;
   display: flex;
   margin-top: 2px;
-  border-radius: 5px;
+  border-radius: 20px;
   padding-left: 10px;
   justify-content: center;
 `;
@@ -284,7 +284,7 @@ const ComponentPressableTime = styled.Pressable`
   background-color: whitesmoke;
   display: flex;
   margin-top: 2px;
-  border-radius: 5px;
+  border-radius: 20px;
   padding-left: 10px;
   justify-content: center;
 `;
@@ -299,7 +299,7 @@ const ComponentContainer = styled.View`
 
 const InputContainer = styled.View`
   flex-direction: row;
-  border-radius: 10px;
+  border-radius: 20px;
 `;
 
 const Input = styled.TextInput`
@@ -309,20 +309,20 @@ const Input = styled.TextInput`
   margin-right: 20px;
   padding: 10px;
   margin-bottom: 20px;
-  border-radius: 10px;
+  border-radius: 20px;
 `;
 
 const SubmitButton = styled.Pressable`
   justify-content: center;
   align-items: center;
-  border-radius: 50px;
+  border-radius: 20px;
 `;
 const ButtonContainer = styled.View`
   color: white;
   margin-top: 40px;
   height: 40px;
   background-color: #00bb2d;
-  border-radius: 4px;
+  border-radius: 20px;
 `;
 const TextButton = styled.Text`
   color: white;

@@ -24,7 +24,10 @@ export default function reducer(state, action) {
         todos: [...state.todos],
       };
     case "DELETE":
-      return { ...action.payload };
+      return {
+        ...state,
+        todos: state.todos.filter((item) => item.id !== action.payload.id),
+      };
     default:
       return state;
   }

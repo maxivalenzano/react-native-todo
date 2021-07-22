@@ -40,7 +40,7 @@ const ItemContainer = styled.TouchableOpacity`
   height: auto;
   width: 350px;
   margin-top: 15px;
-  border-radius: 10px;
+  border-radius: 20px;
   flex-direction: row;
   justify-content: space-between;
 `;
@@ -65,14 +65,14 @@ const TextDate = styled.Text`
   color: goldenrod;
   font-size: 15px;
   margin-right: 20px;
-  border-radius: 10px;
+  border-radius: 20px;
   width: auto;
 `;
 
 const IconContainer = styled.TouchableOpacity`
   align-items: center;
   justify-content: center;
-  border-radius: 10px;
+  border-radius: 20px;
   padding-left: 5px;
 `;
 

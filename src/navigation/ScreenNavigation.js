@@ -4,40 +4,56 @@ import { createStackNavigator } from "react-navigation-stack";
 import Alltask from "../screens/All";
 import Complete from "../screens/Complete";
 import Uncomplete from "../screens/Uncomplete";
-import AddInput from "../components/AddItem";
+import AddTask from "../components/AddItem";
 
-const TabNavigator = createMaterialTopTabNavigator({
-  All: {
-    screen: Alltask,
+const TabNavigator = createMaterialTopTabNavigator(
+  {
+    All: {
+      screen: Alltask,
+      navigationOptions: () => ({
+        title: `All`,
+      }),
+    },
+    Completed: {
+      screen: Complete,
+    },
+    Uncompleted: {
+      screen: Uncomplete,
+    },
   },
-  Completed: {
-    screen: Complete,
-  },
-  Uncompleted: {
-    screen: Uncomplete,
-  },
-});
+  {
+    tabBarOptions: {
+      upperCaseLabel: false,
+      labelStyle: {
+        color: "black",
+      },
+      tabStyle: {
+        // width: 100,
+        activeTintColor: "black",
+      },
+      style: {
+        backgroundColor: "white",
+        borderColor: "grey",
+      },
+    },
+  }
+);
 
 const WelcomeScreen = createStackNavigator(
   {
     Board: {
       screen: TabNavigator,
-      // navigationOptions: ({ navigation }) => {
-      //   return {
-      //     headerTitle: () => <Header navigation={navigation} />,
-      //   };
-      // },
+      navigationOptions: () => ({
+        title: `Board`,
+        headerTitleStyle: { alignSelf: "flex-start" },
+      }),
     },
-    AddInput: {
-      screen: AddInput,
-      // navigationOptions: ({ navigation }) => {
-      //   return {
-      //     headerLeft: () => {
-      //       null;
-      //     },
-      //     headerTitle: () => <Header navigation={navigation} />,
-      //   };
-      // },
+    AddTask: {
+      screen: AddTask,
+      navigationOptions: () => ({
+        title: `Add task`,
+        headerTitleStyle: { alignSelf: "flex-start" },
+      }),
     },
   },
   {
