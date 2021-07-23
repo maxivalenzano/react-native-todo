@@ -8,42 +8,28 @@ import moment from "moment";
 import ModalSelector from "react-native-modal-selector";
 
 const Item = ({ navigation }) => {
+  const { item } = navigation.state.params;
   const { dispatch } = useContext(Store);
 
   const {
-    register,
-    setValue,
     handleSubmit,
     control,
     reset,
     formState: { errors },
   } = useForm({
     defaultValues: {
-      task: "",
-      deadline: "",
-      start: "",
-      end: "",
-      remind: "",
-      repeat: "",
+      task: item.task,
+      deadline: item.deadline,
+      start: item.start,
+      end: item.end,
+      remind: item.remind,
+      repeat: item.repeat,
     },
   });
-  const onSubmitData = (data) => {
-    const object = { ...data, status: false };
-    console.log(object);
-    dispatch({ type: "ADD", payload: object });
-    resetForm();
-    navigation.goBack("");
-  };
 
-  const resetForm = () => {
-    reset({
-      task: "",
-      deadline: "",
-      start: "",
-      end: "",
-      remind: "",
-      repeat: "Daily",
-    });
+  const onDeleteData = () => {
+    dispatch({ type: "DELETE", payload: item });
+    navigation.goBack("");
   };
 
   const initDate = new Date();
@@ -82,6 +68,7 @@ const Item = ({ navigation }) => {
               onBlur={onBlur}
               onChangeText={(value) => onChange(value)}
               value={value}
+              editable={false}
             />
           </ComponentPressable>
         )}
@@ -96,9 +83,9 @@ const Item = ({ navigation }) => {
           <>
             <ComponentPressable
               returnKeyType="next"
-              onPress={() => {
-                setVisibleDate(true);
-              }}
+              // onPress={() => {
+              //   setVisibleDate(true);
+              // }}
             >
               <TextLabel>
                 {!!value ? `${moment(value).format("DD-MM-YYYY")}` : ""}
@@ -135,9 +122,9 @@ const Item = ({ navigation }) => {
               <>
                 <ComponentPressableTime
                   returnKeyType="next"
-                  onPress={() => {
-                    setVisibleStart(true);
-                  }}
+                  // onPress={() => {
+                  //   setVisibleStart(true);
+                  // }}
                 >
                   <TextLabel>
                     {!!value ? `${moment(value).format("hh:mm A")}` : ""}
@@ -178,9 +165,9 @@ const Item = ({ navigation }) => {
               <>
                 <ComponentPressableTime
                   returnKeyType="next"
-                  onPress={() => {
-                    setVisibleEnd(true);
-                  }}
+                  // onPress={() => {
+                  //   setVisibleEnd(true);
+                  // }}
                 >
                   <TextLabel>
                     {!!value ? `${moment(value).format("hh:mm A")}` : ""}
@@ -216,6 +203,7 @@ const Item = ({ navigation }) => {
           <ComponentPressable>
             <ModalSelector
               data={valuesRemind}
+              disabled={true}
               initValue="Choose one"
               onChange={(option) => {
                 onChange(option.label);
@@ -240,6 +228,7 @@ const Item = ({ navigation }) => {
         render={({ field: { onChange, onBlur, value } }) => (
           <ComponentPressable>
             <ModalSelector
+              disabled={true}
               data={valuesRepeat}
               initValue="Choose one"
               onChange={(option) => {
@@ -260,8 +249,8 @@ const Item = ({ navigation }) => {
       {errors.repeat && <ErrorText>This is required.</ErrorText>}
 
       <ButtonContainer>
-        <SubmitButton onPress={handleSubmit(onSubmitData)}>
-          <TextButton>Create a Task</TextButton>
+        <SubmitButton onPress={onDeleteData}>
+          <TextButton>Delete</TextButton>
         </SubmitButton>
       </ButtonContainer>
     </ComponentContainer>
@@ -333,9 +322,10 @@ const ButtonContainer = styled.View`
   color: white;
   margin-top: 40px;
   height: 40px;
-  background-color: #00bb2d;
+  background-color: #ff0000;
   border-radius: 20px;
 `;
+
 const TextButton = styled.Text`
   color: white;
   margin: 10px;

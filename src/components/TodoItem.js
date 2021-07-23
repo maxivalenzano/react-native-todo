@@ -4,10 +4,15 @@ import { MaterialIcons } from "@expo/vector-icons";
 import styled from "styled-components";
 import moment from "moment";
 
-export default function TodoList({ item, checkItem }) {
+export default function TodoList({ item, checkItem, navigation }) {
+  const handleScreen = () => {
+    // console.log(navigation);
+    navigation.navigate("Task", { item: item });
+  };
+
   return (
     <ComponentContainer>
-      <ItemContainer>
+      <ItemContainer onPress={() => handleScreen()}>
         <IconContainer
           onPress={() => {
             checkItem(item, !item.isCompleted);
@@ -20,22 +25,15 @@ export default function TodoList({ item, checkItem }) {
           />
         </IconContainer>
         <View>
-          <TextItem>{item.task}</TextItem>
-          <TextDate>
-            {!!item.deadline
-              ? `${moment(item.deadline).format("DD-MM-YYYY")}`
-              : "nuevo"}
-          </TextDate>
+          <TextItem> {item.task}</TextItem>
+          <TextDate> {moment(item.deadline).format("DD-MM-YYYY")} </TextDate>
         </View>
-        {/* <IconContainer onPress={() => checkItem(item.id)}>
-          <MaterialIcons name="delete" size={24} color="midnightblue" />
-        </IconContainer> */}
       </ItemContainer>
     </ComponentContainer>
   );
 }
 
-const ItemContainer = styled.TouchableOpacity`
+const ItemContainer = styled.Pressable`
   background-color: whitesmoke;
   height: auto;
   width: 350px;
@@ -45,7 +43,7 @@ const ItemContainer = styled.TouchableOpacity`
   justify-content: space-between;
 `;
 
-const ComponentContainer = styled.View`
+const ComponentContainer = styled.TouchableOpacity`
   flex-direction: row;
   justify-content: center;
   height: auto;

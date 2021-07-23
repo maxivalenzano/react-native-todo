@@ -28,9 +28,7 @@ const AddItem = ({ navigation }) => {
     },
   });
   const onSubmitData = (data) => {
-    const object = { ...data, status: false };
-    console.log(object);
-    dispatch({ type: "ADD", payload: object });
+    dispatch({ type: "ADD", payload: data });
     resetForm();
     navigation.goBack("");
   };
@@ -222,7 +220,7 @@ const AddItem = ({ navigation }) => {
               }}
             >
               <TextInput
-                editable={false}
+                // editable={false}
                 placeholder="Choose one"
                 value={value}
               />
@@ -247,7 +245,7 @@ const AddItem = ({ navigation }) => {
               }}
             >
               <TextInput
-                editable={false}
+                // editable={false}
                 placeholder="Choose one"
                 value={value}
               />

@@ -11,7 +11,7 @@ const AllTask = ({ navigation }) => {
   const { state, dispatch } = useContext(Store);
   console.log("Store: ", state);
 
-  const handleIngresarButton = () => {
+  const handleScreen = () => {
     navigation.navigate("AddTask");
   };
 
@@ -28,11 +28,15 @@ const AllTask = ({ navigation }) => {
           ListEmptyComponent={() => <Empty />}
           keyExtractor={(item) => item.id.toString()}
           renderItem={({ item }) => (
-            <TodoList item={item} checkItem={checkItem} />
+            <TodoList
+              item={item}
+              checkItem={checkItem}
+              navigation={navigation}
+            />
           )}
         />
         <ButtonContainer>
-          <SubmitButton onPress={() => handleIngresarButton()}>
+          <SubmitButton onPress={() => handleScreen()}>
             <TextButton>Add a Task</TextButton>
           </SubmitButton>
         </ButtonContainer>
