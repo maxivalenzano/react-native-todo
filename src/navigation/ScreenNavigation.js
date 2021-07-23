@@ -1,11 +1,13 @@
 import { createAppContainer, createSwitchNavigator } from "react-navigation";
 import { createMaterialTopTabNavigator } from "react-navigation-tabs";
-import { createStackNavigator } from "react-navigation-stack";
+import { createStackNavigator, HeaderBackButton } from "react-navigation-stack";
 import Alltask from "../screens/All";
 import Complete from "../screens/Complete";
 import Uncomplete from "../screens/Uncomplete";
 import AddTask from "../components/AddItem";
 import Item from "../components/Item";
+import { MaterialIcons } from "@expo/vector-icons";
+import React from "react";
 
 const TabNavigator = createMaterialTopTabNavigator(
   {
@@ -46,22 +48,34 @@ const WelcomeScreen = createStackNavigator(
       screen: TabNavigator,
       navigationOptions: () => ({
         title: `Board`,
-        headerTitleStyle: { alignSelf: "flex-start" },
+        headerTitleAlign: "left",
       }),
     },
     AddTask: {
       screen: AddTask,
-      navigationOptions: () => ({
+      navigationOptions: ({ navigation }) => ({
         title: `Add task`,
-        headerTitleStyle: { alignSelf: "flex-start" },
+        headerTitleAlign: "left",
+        headerLeft: (
+          <HeaderBackButton
+            labelVisible={false}
+            onPress={() => navigation.goBack(null)}
+          />
+        ),
       }),
     },
 
     Task: {
       screen: Item,
-      navigationOptions: () => ({
+      navigationOptions: ({ navigation }) => ({
         title: `Task`,
-        headerTitleStyle: { alignSelf: "flex-start" },
+        headerTitleAlign: "left",
+        headerLeft: (
+          <HeaderBackButton
+            labelVisible={false}
+            onPress={() => navigation.goBack(null)}
+          />
+        ),
       }),
     },
   },

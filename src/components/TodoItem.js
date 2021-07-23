@@ -34,7 +34,7 @@ export default function TodoList({ item, checkItem, navigation }) {
 }
 
 const ItemContainer = styled.Pressable`
-  background-color: whitesmoke;
+  /* background-color: whitesmoke; */
   height: auto;
   width: 350px;
   margin-top: 15px;
